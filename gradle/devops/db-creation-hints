@@ -1,0 +1,3 @@
+Create new user which can be used by the app to connect to the DB at localhost
+mysql> CREATE USER 'root'@'%' IDENTIFIED BY 'root';
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
