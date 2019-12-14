@@ -1,16 +1,13 @@
 package com.timetracker.domain.project;
 
-import com.timetracker.domain.user.User;
-
+import java.math.BigDecimal;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,22 +15,31 @@ import javax.persistence.Table;
 public class Project {
 
     @Id
+    @Column(name = "project_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "projects")
-    private Set<User> users;
+    @Column(name = "cost")
+    private BigDecimal cost;
+
+    public BigDecimal getCost() {
+        return cost;
+    }
+
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
+    }
 
     public Project() {
     }
 
-    public Project(Long id, String name, Set<User> users) {
+    public Project(Long id, String name, BigDecimal cost) {
         this.id = id;
         this.name = name;
-        this.users = users;
+        this.cost = cost;
     }
 
     public Long getId() {
@@ -52,23 +58,6 @@ public class Project {
         this.name = name;
     }
 
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    @Override
-    public String toString() {
-        return "Project{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", users=" + users +
-                '}';
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,11 +65,11 @@ public class Project {
         Project project = (Project) o;
         return Objects.equals(id, project.id) &&
                 Objects.equals(name, project.name) &&
-                Objects.equals(users, project.users);
+                Objects.equals(cost, project.cost);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, users);
+        return Objects.hash(id, name, cost);
     }
 }

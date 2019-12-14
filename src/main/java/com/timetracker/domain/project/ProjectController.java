@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/projects")
 public class ProjectController {
-    ProjectService projectService;
+    private ProjectService projectService;
 
     @Autowired
     public ProjectController(ProjectService projectService) {
@@ -49,7 +49,7 @@ public class ProjectController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable ("id") Long id) {
+    public void delete(@PathVariable("id") Long id) {
         projectService.delete(id);
     }
 }

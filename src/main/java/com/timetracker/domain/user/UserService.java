@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 
 @Service
 public class UserService {
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -24,15 +24,17 @@ public class UserService {
     }
 
     public void update(Long id, User user) {
-        User existingUser = userRepository.findById(id).orElseThrow(() ->
-                new NoSuchElementException("User with " + id + " id not found!"));
-
+        User existingUser = findById(id);
         existingUser.setName(user.getName());
-        existingUser.setProjects(user.getProjects());
         userRepository.save(existingUser);
     }
 
     public void delete(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(() ->
+                new NoSuchElementException("User with " + id + " id not found!"));
     }
 }

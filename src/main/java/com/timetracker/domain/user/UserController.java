@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    UserService userService;
+    private UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -34,6 +34,12 @@ public class UserController {
         return userService.getAll();
     }
 
+    @GetMapping("/{id}")
+    public User findById(@PathVariable("id") Long id) {
+        return userService.findById(id);
+
+    }
+
     @PostMapping
     public void create(@RequestBody User user) {
         userService.create(user);
@@ -45,7 +51,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id)    {
+    public void delete(@PathVariable("id") Long id) {
         userService.delete(id);
     }
 }

@@ -5,11 +5,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class ProjectService {
-    ProjectRepository projectRepository;
+    private ProjectRepository projectRepository;
 
     @Autowired
     public ProjectService(ProjectRepository projectRepository) {
@@ -30,10 +29,8 @@ public class ProjectService {
     }
 
     public void update(Long id, Project project) {
-        Project existingProject = projectRepository.findById(id).orElseThrow(() ->
-                new NoSuchElementException("Project with " + id + " id not found!"));
+        Project existingProject = findById(id);
         existingProject.setName(project.getName());
-        existingProject.setUsers(project.getUsers());
         projectRepository.save(existingProject);
     }
 
